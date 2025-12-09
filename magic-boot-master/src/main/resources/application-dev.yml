@@ -1,0 +1,11 @@
+
+server:
+  port: 9999
+
+spring:
+  datasource:
+#    url: jdbc:mysql://mysql-local.data-services.svc.cluster.local:3306/cheetah-boot?useSSL=false&zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF8&autoReconnect=true&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root
+#    password: Clxt@123
+upload:
+  dir: /data/mb/

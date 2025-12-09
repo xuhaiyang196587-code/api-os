@@ -1,0 +1,75 @@
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=5,IE=9" ><![endif]-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<style>
+	  body {
+      font-family: Arial, sans-serif;
+    }
+    #events {
+      margin-top: 20px;
+    }
+    .event {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+	/* 使 JSON 数据显示为格式化的文本 */
+    #data pre {
+      white-space: pre-wrap; /* 保证文本在屏幕上换行 */
+      word-wrap: break-word; /* 防止长字符串溢出 */
+      background-color: #f4f4f4;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+	
+	.fixed-top-left {
+	  position: fixed;
+	  top: 19.5px;
+	  left: -10px;
+	  width: 100%;
+	  color: white;
+	  text-align: right;
+	}
+
+</style>
+<script>
+	var eventSource = null;
+    function start(){
+		let clientId = 'peter-123456';
+		eventSource = new EventSource('http://192.168.1.205:9999/monitor/get?clientId='+clientId);
+	 
+		eventSource.addEventListener(clientId, function(event) {
+		
+		console.log(event.data)
+			const dataDiv = document.getElementById("data");
+			// 格式化 JSON 数据并更新到页面
+			let jsonData = JSON.parse(event.data); // 假设 event.data 是 JSON 格式字符串
+			dataDiv.innerHTML += '<pre>' + JSON.stringify(jsonData, null, 2) + '</pre>';
+		});
+
+		eventSource.onerror = function(event) {
+			console.log("EventSource failed. Trying to reconnect...", event);
+			eventSource.close();
+			// 延迟3秒后重新连接
+			setTimeout(function() {
+				eventSource = new EventSource('http://192.168.1.205:9999/monitor/get?clientId='+clientId);
+			}, 3000);
+		};
+	}
+	
+	function stop(){
+		eventSource.close();
+	}
+    
+  </script>
+</head>
+<body>
+  <div class="fixed-top-left"><a onClick="start()" style="margin-left: 95px;border: 1px solid #59e743;background: #59e743;padding:5px;cursor:pointer;">读取</a> <a onClick="stop()" style="border: 1px solid red;background:red;padding:5px;cursor:pointer;">暂停</a></div>
+  <div id="data"></div>
+  
+</body>
+</html>

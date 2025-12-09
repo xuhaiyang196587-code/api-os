@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../favicon.png">
+    <title>API-OS云平台开发文档</title>
+    <link rel="stylesheet" href="./all.min.css">
+    <script src="marked.min.js"></script>
+    <script src="../jquery-2.2.4.min.js"></script>
+    <script src="../request.js"></script>
+</head>
+<body style="overflow: hidden;">
+    <!-- 侧边栏 -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-book-open"></i>
+            <h1>文档导航</h1>
+        </div>
+        <nav class="tree-menu">
+            <ul>
+                <li class="has-children">
+                    <div class="menu-item">
+                        <i class="fas fa-folder"></i>
+                        <span>开发指南</span>
+                    </div>
+                    <ul class="submenu">
+                        <li><div class="menu-item" data-content="intro">项目介绍</div></li>
+                        <li><div class="menu-item" data-content="quickstart">快速开始</div></li>
+                        <li><div class="menu-item" data-content="structure">项目结构</div></li>
+                    </ul>
+                </li>
+                <li class="has-children">
+                    <div class="menu-item">
+                        <i class="fas fa-folder"></i>
+                        <span>API 文档</span>
+                    </div>
+                    <ul class="submenu">
+                        <li><div class="menu-item" data-content="api-overview">API 概览</div></li>
+                        <li><div class="menu-item" data-content="auth">认证授权</div></li>
+                        <li><div class="menu-item" data-content="users">用户接口</div></li>
+                        <li><div class="menu-item" data-content="products">产品接口</div></li>
+                    </ul>
+                </li>
+                <li class="has-children">
+                    <div class="menu-item">
+                        <i class="fas fa-folder"></i>
+                        <span>部署指南</span>
+                    </div>
+                    <ul class="submenu">
+                        <li><div class="menu-item" data-content="deploy-local">本地部署</div></li>
+                        <li><div class="menu-item" data-content="deploy-server">服务器部署</div></li>
+                        <li><div class="menu-item" data-content="deploy-docker">Docker 部署</div></li>
+                    </ul>
+                </li>
+                <li class="has-children">
+                    <div class="menu-item">
+                        <i class="fas fa-folder"></i>
+                        <span>常见问题</span>
+                    </div>
+                    <ul class="submenu">
+                        <li><div class="menu-item" data-content="faq-install">安装问题</div></li>
+                        <li><div class="menu-item" data-content="faq-config">配置问题</div></li>
+                        <li><div class="menu-item" data-content="faq-troubleshoot">故障排除</div></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- 主内容区域 -->
+    <div class="main-content" style="height:100vh;overflow-y: auto;">
+        <div class="content-header">
+            <h1>欢迎使用文档系统</h1>
+            <div class="breadcrumb">
+                <a href="#">首页</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>请从左侧菜单选择文档</span>
+            </div>
+        </div>
+        <div class="content-body">
+            <div class="empty-state">
+                <i class="fas fa-file-alt"></i>
+                <h3>暂无内容</h3>
+                <p>请从左侧菜单选择一个文档进行查看</p>
+            </div>
+            <div id="markdown-content" class="markdown-body" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        // 初始化树形菜单交互
+        document.addEventListener('DOMContentLoaded', function() {
+            // 处理菜单项的点击事件
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // 移除所有活动状态
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    // 设置当前活动状态
+                    this.classList.add('active');
+                    
+                    // 如果有子菜单，切换展开/折叠
+                    const parentLi = this.parentElement;
+                    if (parentLi.classList.contains('has-children')) {
+                        parentLi.classList.toggle('open');
+                    } else {
+                        // 加载内容
+                        const contentId = this.getAttribute('data-content');
+                        if (contentId) {
+                            loadContent(contentId);
+                            updateBreadcrumb(this.textContent.trim());
+                        }
+                    }
+                });
+            });
+
+            // 初始加载第一个文档
+            setTimeout(() => {
+                document.querySelector('.menu-item[data-content="intro"]').click();
+            }, 500);
+        });
+
+        // 更新面包屑导航
+        function updateBreadcrumb(title) {
+            const breadcrumb = document.querySelector('.breadcrumb');
+            breadcrumb.innerHTML = `
+                <a href="#">首页</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>${title}</span>
+            `;
+        }
+
+        // 加载内容
+        function loadContent(contentId) {
+            const contentElement = document.getElementById('markdown-content');
+            const emptyState = document.querySelector('.empty-state');
+            const contentHeader = document.querySelector('.content-header h1');
+            
+            // 显示加载中的状态
+            contentElement.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> 加载中...</p>';
+            contentElement.style.display = 'block';
+            emptyState.style.display = 'none';
+            
+            // 模拟从服务器获取Markdown内容
+            setTimeout(() => {
+                const content = getMarkdownContent(contentId);
+                contentElement.innerHTML = marked.parse(content);
+                contentHeader.textContent = getContentTitle(contentId);
+            }, 300);
+        }
+        // 获取Markdown内容（实际应用中应从服务器获取）
+        function getMarkdownContent(id) {
+            const contentMap = {
+                'intro': Request.readFileContent('pages/项目介绍.md?random='+Math.random()),
+                'quickstart': Request.readFileContent('pages/快速开始.md?random='+Math.random()),
+                'api-overview': Request.readFileContent('pages/API 概览.md?random='+Math.random()),
+                'deploy-docker':  Request.readFileContent('pages/Docker 部署指南.md?random='+Math.random()),
+                'faq-install': Request.readFileContent('pages/安装常见问题.md?random='+Math.random())
+            };
+            
+            return contentMap[id] || '# 文档未找到\n\n抱歉，您请求的文档不存在。';
+        }
+
+        // 获取内容标题
+        function getContentTitle(id) {
+            const titleMap = {
+                'intro': '项目介绍',
+                'quickstart': '快速开始',
+                'structure': '项目结构',
+                'api-overview': 'API 概览',
+                'auth': '认证授权 API',
+                'users': '用户管理 API',
+                'products': '产品管理 API',
+                'deploy-local': '本地部署指南',
+                'deploy-server': '服务器部署指南',
+                'deploy-docker': 'Docker 部署指南',
+                'faq-install': '安装常见问题',
+                'faq-config': '配置常见问题',
+                'faq-troubleshoot': '故障排除指南'
+            };
+            
+            return titleMap[id] || '未知文档';
+        }
+    </script>
+</body>
+</html>

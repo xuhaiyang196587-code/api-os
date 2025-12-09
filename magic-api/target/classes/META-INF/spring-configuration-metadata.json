@@ -1,0 +1,346 @@
+{
+  "groups": [
+    {
+      "name": "magic-api",
+      "type": "org.ssssssss.magicapi.core.config.MagicAPIProperties",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.backup",
+      "type": "org.ssssssss.magicapi.core.config.Backup",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties",
+      "sourceMethod": "public org.ssssssss.magicapi.core.config.Backup getBackup() "
+    },
+    {
+      "name": "magic-api.cache",
+      "type": "org.ssssssss.magicapi.core.config.Cache",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties",
+      "sourceMethod": "public org.ssssssss.magicapi.core.config.Cache getCache() "
+    },
+    {
+      "name": "magic-api.crud",
+      "type": "org.ssssssss.magicapi.core.config.Crud",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties",
+      "sourceMethod": "public org.ssssssss.magicapi.core.config.Crud getCrud() "
+    },
+    {
+      "name": "magic-api.debug",
+      "type": "org.ssssssss.magicapi.core.config.Debug",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties",
+      "sourceMethod": "public org.ssssssss.magicapi.core.config.Debug getDebug() "
+    },
+    {
+      "name": "magic-api.page",
+      "type": "org.ssssssss.magicapi.core.config.Page",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties",
+      "sourceMethod": "public org.ssssssss.magicapi.core.config.Page getPage() "
+    },
+    {
+      "name": "magic-api.resource",
+      "type": "org.ssssssss.magicapi.core.config.Resource",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties",
+      "sourceMethod": "public org.ssssssss.magicapi.core.config.Resource getResource() "
+    },
+    {
+      "name": "magic-api.response-code",
+      "type": "org.ssssssss.magicapi.core.config.ResponseCode",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties",
+      "sourceMethod": "public org.ssssssss.magicapi.core.config.ResponseCode getResponseCode() "
+    },
+    {
+      "name": "magic-api.security",
+      "type": "org.ssssssss.magicapi.core.config.Security",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties",
+      "sourceMethod": "public org.ssssssss.magicapi.core.config.Security getSecurity() "
+    }
+  ],
+  "properties": [
+    {
+      "name": "magic-api.allow-override",
+      "type": "java.lang.Boolean",
+      "description": "是否允许覆盖应用接口，默认为false @since 0.4.0",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.auto-import-module",
+      "type": "java.lang.String",
+      "description": "自动导入的模块,多个用\",\"分隔 @since 0.3.2",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.auto-import-module-list",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.auto-import-package",
+      "type": "java.lang.String",
+      "description": "可自动导入的包（目前只支持以.*结尾的通配符），多个用\",\"分隔 @since 0.4.0",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.auto-import-package-list",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.backup.datasource",
+      "type": "java.lang.String",
+      "description": "使用数据库存储时使用的数据源",
+      "sourceType": "org.ssssssss.magicapi.core.config.Backup"
+    },
+    {
+      "name": "magic-api.backup.enable",
+      "type": "java.lang.Boolean",
+      "description": "是否启用备份配置，默认不启用",
+      "sourceType": "org.ssssssss.magicapi.core.config.Backup"
+    },
+    {
+      "name": "magic-api.backup.max-history",
+      "type": "java.lang.Integer",
+      "description": "保留天数，<=0 为不限制",
+      "sourceType": "org.ssssssss.magicapi.core.config.Backup"
+    },
+    {
+      "name": "magic-api.backup.table-name",
+      "type": "java.lang.String",
+      "description": "使用数据库存储时的表名",
+      "sourceType": "org.ssssssss.magicapi.core.config.Backup"
+    },
+    {
+      "name": "magic-api.banner",
+      "type": "java.lang.Boolean",
+      "description": "打印banner",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.cache.capacity",
+      "type": "java.lang.Integer",
+      "description": "默认缓存容量",
+      "sourceType": "org.ssssssss.magicapi.core.config.Cache"
+    },
+    {
+      "name": "magic-api.cache.enable",
+      "type": "java.lang.Boolean",
+      "description": "是否启用缓存",
+      "sourceType": "org.ssssssss.magicapi.core.config.Cache"
+    },
+    {
+      "name": "magic-api.cache.ttl",
+      "type": "java.lang.Long",
+      "description": "默认过期时间,单位为毫秒，-1为不过期",
+      "sourceType": "org.ssssssss.magicapi.core.config.Cache"
+    },
+    {
+      "name": "magic-api.compile-cache-size",
+      "type": "java.lang.Integer",
+      "description": "编译缓存容量 @since 1.5.3",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.crud.logic-delete-column",
+      "type": "java.lang.String",
+      "description": "逻辑删除列",
+      "sourceType": "org.ssssssss.magicapi.core.config.Crud"
+    },
+    {
+      "name": "magic-api.crud.logic-delete-value",
+      "type": "java.lang.String",
+      "description": "逻辑删除值",
+      "sourceType": "org.ssssssss.magicapi.core.config.Crud"
+    },
+    {
+      "name": "magic-api.date-pattern",
+      "type": "java.lang.String[]",
+      "description": "请求参数日期格式 @since 1.5.2",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.debug.timeout",
+      "type": "java.lang.Integer",
+      "description": "断点超时时间",
+      "sourceType": "org.ssssssss.magicapi.core.config.Debug"
+    },
+    {
+      "name": "magic-api.editor-config",
+      "type": "java.lang.String",
+      "description": "编辑器配置文件路径(js) @since 0.6.1",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.instance-id",
+      "type": "java.lang.String",
+      "description": "实例ID，集群环境下，要保证每台机器不同。默认启动后随机生成uuid",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.page.default-page",
+      "type": "java.lang.Long",
+      "description": "默认首页",
+      "sourceType": "org.ssssssss.magicapi.core.config.Page"
+    },
+    {
+      "name": "magic-api.page.default-size",
+      "type": "java.lang.Long",
+      "description": "默认页大小",
+      "sourceType": "org.ssssssss.magicapi.core.config.Page"
+    },
+    {
+      "name": "magic-api.page.max-page-size",
+      "type": "java.lang.Long",
+      "description": "最大页大小， -1 为不限制",
+      "sourceType": "org.ssssssss.magicapi.core.config.Page"
+    },
+    {
+      "name": "magic-api.page.page",
+      "type": "java.lang.String",
+      "description": "默认page表达式",
+      "sourceType": "org.ssssssss.magicapi.core.config.Page"
+    },
+    {
+      "name": "magic-api.page.size",
+      "type": "java.lang.String",
+      "description": "默认size表达式",
+      "sourceType": "org.ssssssss.magicapi.core.config.Page"
+    },
+    {
+      "name": "magic-api.persistence-response-body",
+      "type": "java.lang.Boolean",
+      "description": "是否持久化保存ResponseBody @since 1.5.3",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.prefix",
+      "type": "java.lang.String",
+      "description": "接口路径前缀",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.push-path",
+      "type": "java.lang.String",
+      "description": "远程推送的路径，默认为\/_magic-api-sync @since 1.2.1",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.resource.datasource",
+      "type": "java.lang.String",
+      "description": "使用数据库存储时使用的数据源",
+      "sourceType": "org.ssssssss.magicapi.core.config.Resource"
+    },
+    {
+      "name": "magic-api.resource.location",
+      "type": "java.lang.String",
+      "description": "文件存储位置",
+      "sourceType": "org.ssssssss.magicapi.core.config.Resource"
+    },
+    {
+      "name": "magic-api.resource.prefix",
+      "type": "java.lang.String",
+      "description": "前缀",
+      "sourceType": "org.ssssssss.magicapi.core.config.Resource"
+    },
+    {
+      "name": "magic-api.resource.readonly",
+      "type": "java.lang.Boolean",
+      "description": "是否是只读模式",
+      "sourceType": "org.ssssssss.magicapi.core.config.Resource"
+    },
+    {
+      "name": "magic-api.resource.table-name",
+      "type": "java.lang.String",
+      "description": "使用数据库存储时的表名",
+      "sourceType": "org.ssssssss.magicapi.core.config.Resource"
+    },
+    {
+      "name": "magic-api.resource.type",
+      "type": "java.lang.String",
+      "description": "存储类型，默认是文件",
+      "sourceType": "org.ssssssss.magicapi.core.config.Resource"
+    },
+    {
+      "name": "magic-api.response",
+      "type": "java.lang.String",
+      "description": "JSON响应结构表达式 @since 1.0.0",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.response-code.exception",
+      "type": "java.lang.Integer",
+      "description": "执行出现异常的code值",
+      "sourceType": "org.ssssssss.magicapi.core.config.ResponseCode"
+    },
+    {
+      "name": "magic-api.response-code.invalid",
+      "type": "java.lang.Integer",
+      "description": "参数验证未通过的code值",
+      "sourceType": "org.ssssssss.magicapi.core.config.ResponseCode"
+    },
+    {
+      "name": "magic-api.response-code.success",
+      "type": "java.lang.Integer",
+      "description": "执行成功的code值",
+      "sourceType": "org.ssssssss.magicapi.core.config.ResponseCode"
+    },
+    {
+      "name": "magic-api.secret-key",
+      "type": "java.lang.String",
+      "description": "远程推送时的秘钥，未配置则不开启 @since 1.2.1",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.security.password",
+      "type": "java.lang.String",
+      "description": "登录用的密码",
+      "sourceType": "org.ssssssss.magicapi.core.config.Security"
+    },
+    {
+      "name": "magic-api.security.username",
+      "type": "java.lang.String",
+      "description": "登录用的用户名",
+      "sourceType": "org.ssssssss.magicapi.core.config.Security"
+    },
+    {
+      "name": "magic-api.show-sql",
+      "type": "java.lang.Boolean",
+      "description": "是否要打印SQL @since 1.5.0",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.show-url",
+      "type": "java.lang.Boolean",
+      "description": "启动完成之后打印地址",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.sql-column-case",
+      "type": "java.lang.String",
+      "description": "SQL列名转换 @since 0.5.0",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.support-cross-domain",
+      "type": "java.lang.Boolean",
+      "description": "是否启用跨域支持 @since 1.0.0",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.thread-pool-executor-size",
+      "type": "java.lang.Integer",
+      "description": "线程核心数，需要>0，<=0时采用默认配置，即CPU核心数 * 2 @since 0.4.5",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.throw-exception",
+      "type": "java.lang.Boolean",
+      "description": "是否抛出异常",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    },
+    {
+      "name": "magic-api.web",
+      "type": "java.lang.String",
+      "description": "web页面入口",
+      "sourceType": "org.ssssssss.magicapi.core.config.MagicAPIProperties"
+    }
+  ],
+  "hints": []
+}

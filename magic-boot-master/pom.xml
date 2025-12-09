@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.ssssssss</groupId>
+	<artifactId>magic-boot</artifactId>
+	<version>1.2.8</version>
+	<name>magic-boot</name>
+	<description>magic-boot</description>
+	<properties>
+		<java.version>17</java.version>
+		<magic-api.version>2.2.2</magic-api.version>
+		<druid.version>1.2.20</druid.version>
+		<hutool-all.version>5.8.15</hutool-all.version>
+		<sa-token.version>1.35.0.RC</sa-token.version>
+		<poi.version>4.1.2</poi.version>
+		<mysql.connector.version>8.0.32</mysql.connector.version>
+		<spring-boot.version>3.2.6</spring-boot.version>
+	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<!-- 引入SpringBoot依赖管理清单 -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.xerial.snappy</groupId>
+				<artifactId>snappy-java</artifactId>
+				<version>1.1.10.5</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<exclusions>
+				<!-- 排除默认的 logging starter，避免与 log4j2 冲突 -->
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+			<exclusions>
+				<!-- 排除默认的 logging starter -->
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.ssssssss</groupId>
+			<artifactId>magic-api-spring-boot-starter</artifactId>
+			<version>${magic-api.version}</version>
+			<exclusions>
+				<!-- 只排除冲突的日志依赖，保留 Hadoop/HBase 功能 -->
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-reload4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.logging.log4j</groupId>
+					<artifactId>log4j-slf4j-impl</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.connector.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid-spring-boot-3-starter</artifactId>
+			<version>${druid.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>${hutool-all.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-spring-boot3-starter</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ssssssss</groupId>
+			<artifactId>magic-api-plugin-task</artifactId>
+			<version>${magic-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+		
+	</dependencies>
+
+	<build>
+		<finalName>magic-boot</finalName>
+		<!-- 新增资源目录配置 -->
+		<resources>
+			<!-- 包含默认资源目录 -->
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<!-- 新增项目根目录下的 data 目录 -->
+			<resource>
+				<directory>${basedir}/data</directory>
+				<includes>
+					<include>**/*</include> <!-- 包含所有文件 -->
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.11.0</version>
+				<configuration>
+					<source>17</source>
+					<target>17</target>
+					<encoding>UTF-8</encoding>
+					<compilerArgs>
+						<arg>--add-opens</arg>
+						<arg>java.base/java.nio=ALL-UNNAMED</arg>
+						<arg>--add-opens</arg>
+						<arg>java.base/sun.nio.ch=ALL-UNNAMED</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>org.ssssssss.magicboot.MagicBootApplication</mainClass>
+				</configuration>
+			</plugin>
+
+			<!--  到工程的根目录下 调用 
+			mvn compile jib:build -DsendCredentialsOverHttp=true 打包镜像到仓库  -->
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.4.1</version>
+				<configuration>
+					<!--  指定基础镜像  -->
+					<from>
+						<image>openeuler/bisheng-jdk:17.0.10-oe2203sp3</image>
+					</from>
+					<!--  指定目标镜像地址  -->
+					<to>
+						<image>172.16.250.80/platform/${artifactId}</image>
+						<tags>
+							<tag>${version}</tag>
+						</tags>
+						<auth>
+							<username>admin</username>
+							<password>Harbor12345</password>
+						</auth>
+						<!--  替换为你的 Harbor 仓库地址、项目和应用程序名称  -->
+					</to>
+					<!--  其他容器配置  -->
+					<container>
+						<mainClass>org.ssssssss.magicboot.MagicBootApplication</mainClass>
+						<!-- <jvmFlags>
+							<jvmFlag>-Xms512m</jvmFlag>
+							<jvmFlag>-Xmx1024m</jvmFlag>
+						</jvmFlags> -->
+						<!--  配置额外参数spring boot 启动添加额外参数  -->
+						<args>
+							<arg>
+								--spring.config.location=classpath:/application.yml</arg>
+						</args>
+					</container>
+					<allowInsecureRegistries>true</allowInsecureRegistries>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
