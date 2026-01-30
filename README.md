@@ -7,5 +7,4 @@ Java 后端快速开发平台（基于magic-api+magic-boot的基础上修改及�
 - **大数据部分**: 下一个版本更新
 
 ## 如有使用疑问
-
-<img width="632" height="664" alt="image" src="https://github.com/user-attachments/assets/7903d4ca-89ab-4431-ab2f-6b05b7a01113" />
+<img width="300" height="300"  alt="image" src="https://github.com/user-attachments/assets/4b22ece5-37c8-480f-86db-471625bbc8ed" />
